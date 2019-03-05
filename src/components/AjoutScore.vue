@@ -1,24 +1,8 @@
 <template>
-  <div v-if="nomJoueurCourant !== ''" class="ajoutScore">
-    <div class="md-layout md-gutter">
-      <div class="md-layout-item">Joueur : {{ nomJoueurCourant }}</div>
-      <div class="md-layout-item">
-        <md-field>
-          <label>Score</label>
-          <md-input v-model.number="valeur" type="number" size="4" number @keyup.enter.native="validerSaisie" ref="score"></md-input>
-        </md-field>
-      </div>
-      <div class="md-layout-item">
-        <md-button id="undo" @click="clickUndo">Undo</md-button>
-      </div>
-    </div>
-  </div>
-  <div v-else>
-    <md-snackbar md-duration="Infinity" active.sync="true" md-persistent>
-      <span>Pas de partie en cours</span>
-      <md-button class="md-primary" to="/new">Nouvelle partie</md-button>
-    </md-snackbar>
-  </div>
+  <md-field>
+    <label>{{ nomJoueurCourant }}</label>
+    <md-input v-model.number="valeur" type="number" size="4" number @keyup.enter.native="validerSaisie" ref="score"></md-input>
+  </md-field>
 </template>
 
 <script>
@@ -32,23 +16,22 @@ export default {
     }
   },
   mounted () {
-    this.$refs.score.$el.focus()
+    this.$refs.score.$el.focus(),
+    this.$root.$on('resetScore', () => {
+      this.resetCompteurs()
+    })
   },
   computed: mapGetters(['nomJoueurCourant']),
   methods: {
-    ...mapActions(['ajouterScore', 'retirerScore']),
+    ...mapActions(['ajouterScore']),
     resetCompteurs () {
       this.valeur = null
+      this.$refs.score.$el.focus()
     },
     validerSaisie () {
       let score = this.valeur
       this.ajouterScore(score)
       this.resetCompteurs()
-    },
-    clickUndo () {
-      this.retirerScore()
-      this.resetCompteurs()
-      this.$refs.score.$el.focus()
     },
   }
 }

@@ -1,45 +1,45 @@
 <template>
   <div class="page-container">
-    <md-app md-mode="reveal">
-      <md-app-toolbar class="md-primary">
-        <md-button class="md-icon-button" @click="menuVisible = !menuVisible">
-          <md-icon>menu</md-icon>
+    <md-toolbar>
+      <div class="md-title md-toolbar-section-start">
+        <AjoutScore/>
+      </div>
+      <div class="md-toolbar-section-end">
+        <BoutonUndo/>
+      <md-menu md-direction="bottom-end">
+        <md-button md-menu-trigger class="md-icon-button">
+          <md-icon>more_vert</md-icon>
         </md-button>
-        <span class="md-title">Grille de scores</span>
-      </md-app-toolbar>
 
-      <md-app-drawer :md-active.sync="menuVisible">
-        <md-toolbar class="md-transparent" md-elevation="0">Navigation</md-toolbar>
-
-        <md-list>
-          <md-list-item><router-link to="/new">Nouvelle partie</router-link></md-list-item>
-
-          <md-list-item>
-            <md-icon>send</md-icon>
-            <span class="md-list-item-text"><router-link to="/">Scores</router-link></span>
-          </md-list-item>
-        </md-list>
-      </md-app-drawer>
-
-      <md-app-content>
-        <router-view/>
-      </md-app-content>
-    </md-app>
+        <md-menu-content>
+          <md-menu-item><router-link to="/new">Nouvelle partie</router-link></md-menu-item>
+          <md-menu-item><router-link to="/">Partie en cours</router-link></md-menu-item>
+        </md-menu-content>
+      </md-menu>
+      </div>
+    </md-toolbar>
+    <md-content>
+      <router-view/>
+    </md-content>
   </div>
 </template>
 
 <script>
+import AjoutScore from '@/components/AjoutScore.vue'
+import BoutonUndo from '@/components/BoutonUndo.vue'
+
 export default {
-  name: 'Reveal',
-  data: () => ({
-    menuVisible: false
-  })
+  name: 'App',
+  components: {
+    AjoutScore,
+    BoutonUndo,
+  },
 }
 </script>
 
 <style lang="scss" scoped>
-  .md-app {
-    min-height: 100vh;
-    border: 1px solid rgba(#000, .12);
-  }
+.md-content {
+  justify-content: center;
+  align-items: center;
+}
 </style>

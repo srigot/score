@@ -1,9 +1,12 @@
 <template>
   <div class="page-container">
     <md-toolbar>
-      <div class="md-title md-toolbar-section-start">
+      <div v-if="nomJoueurCourant !== ''" class="md-title md-toolbar-section-start">
         <AjoutScore/>
       </div>
+      <div v-else>
+        Pas de partie en cours : <router-link to="/new">Nouvelle Partie</router-link>
+        </div>
       <div class="md-toolbar-section-end">
         <BoutonUndo/>
       <md-menu md-direction="bottom-end">
@@ -25,11 +28,13 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 import AjoutScore from '@/components/AjoutScore.vue'
 import BoutonUndo from '@/components/BoutonUndo.vue'
 
 export default {
   name: 'App',
+  computed: mapGetters(['nomJoueurCourant']),
   components: {
     AjoutScore,
     BoutonUndo,

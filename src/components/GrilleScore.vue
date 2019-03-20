@@ -33,6 +33,9 @@ export default {
 .md-table-head-container {
   text-align: center;
 }
+.md-table-cell.md-numeric {
+  padding: right 10px;
+}
 .total {
   font-weight: bold;
 }
